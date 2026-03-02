@@ -7,6 +7,7 @@ from utils.helpers import print_banner, print_response, print_error
 from agents.react_agent import ReActAgent
 from agents.conversational_agent import ConversationalAgent
 from agents.tool_agent import ToolAgent
+from agents.personal_chef_agent import ChefAgent
 
 console = Console()
 
@@ -14,11 +15,12 @@ AGENTS = {
     "1": ("ReAct Agent", ReActAgent),
     "2": ("Conversational Agent", ConversationalAgent),
     "3": ("Tool Agent", ToolAgent),
+    "4": ("Chef Agent", ChefAgent),
 }
 
 
 @click.command()
-@click.option("--agent", "-a", type=click.Choice(["1", "2", "3"]), help="Agent type to use")
+@click.option("--agent", "-a", type=click.Choice(["1", "2", "3", "4"]), help="Agent type to use")
 def main(agent: str):
     """LangChain Console Agents - Interactive AI agents."""
     print_banner()

@@ -1,7 +1,7 @@
 """Tool-based Agent implementation."""
 from typing import Any, List
 from .base_agent import BaseAgent
-
+from tavily import TavilyClient
 
 class ToolAgent(BaseAgent):
     """Agent that can use custom tools."""

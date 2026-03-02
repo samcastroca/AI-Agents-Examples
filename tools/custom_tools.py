@@ -1,6 +1,9 @@
 """Custom tools for agents."""
 from langchain.tools import tool
+from tavily import TavilyClient
+from typing import Any, Dict
 
+tavily_client = TavilyClient()
 
 @tool
 def example_tool(query: str) -> str:
@@ -8,4 +11,9 @@ def example_tool(query: str) -> str:
     return f"Processed: {query}"
 
 
-# Add more custom tools here
+@tool
+def web_search(query: str) -> Dict[str, Any]:
+
+    """Search the web for information"""
+
+    return tavily_client.search(query)

@@ -4,6 +4,7 @@ from typing import Any
 from .base_agent import BaseAgent
 from langchain.agents import create_agent
 from langchain.messages import HumanMessage
+from langgraph.checkpoint.memory import InMemorySaver  
 
 class ConversationalAgent(BaseAgent):
     """Agent with memory for multi-turn conversations."""
@@ -18,19 +19,22 @@ class ConversationalAgent(BaseAgent):
 
     def create_agent(self) -> Any:
         """Create the conversational agent."""
-        self.agent = create_agent(model="gpt-5-nano")
+        self.memory = InMemorySaver()
+        self.agent = create_agent(model="gpt-5-nano",
+                                  checkpointer=self.memory)
 
     def run(self, query: str) -> str:
         """Run the agent with a query."""
+        config = {"configurable": {"thread_id": "1"}}
         question = HumanMessage(content=query)
 
         response = self.agent.invoke(
-            {"messages": [question]}
+            {"messages": [question]},
+            config=config
         )
 
-        return response['messages'][1].content
+        return response['messages'][-1].content
 
     def clear_memory(self):
         """Clear conversation history."""
-        # TODO: Implement memory clearing
-        pass
+        self.memory.delete_thread("1")

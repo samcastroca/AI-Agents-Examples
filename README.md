@@ -1,4 +1,4 @@
-# LangChain Console Agents
+# LangChain Console Agents Examples
 
 A collection of LangChain agents that can be used from the command line.
 
